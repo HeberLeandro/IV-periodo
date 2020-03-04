@@ -4,12 +4,12 @@ import java.util.*;
 
 public class EchoServer {
 	
-	public String cesar(String mensagem){
+	public String cesar(String mensagem, int grau){
 		mensagem = mensagem.toLowerCase();
 		String aux = "";
 		
 		for (int i = 0; i < mensagem.length(); i++) {
-			aux += Character.toString((char) ((int) (mensagem.charAt(i)) + 10)); 
+			aux += Character.toString((char) ((int) (mensagem.charAt(i)) + grau)); 
 		}
 
 		mensagem = String.valueOf(aux);
@@ -46,9 +46,9 @@ public class EchoServer {
 					if (line.equals("SO") || line.equals("so") || line.equals("os") || line.equals("OS")) out.println("Nosso SO é o " + so);
 					else if (line.equals("hd") || line.equals("HD") || line.equals("Hd")) out.println("Nosso HD é de " + hdSize + " GB");
 					else if (line.equals("java") || line.equals("JAVA") || line.equals("Java")) out.println("Nosso java está na versão " + java);
-					else out.println("Echo: " + server.cesar(line));
+					else out.println("Echo: " + server.cesar(line, 3));
 
-					System.out.println("Client say: "+ server.cesar(line));
+					System.out.println("Client say: "+ server.cesar(line, 3));
 
 		    		if (line.trim().equals("BYE") || line.trim().equals("bye")) done = true;
 				}
