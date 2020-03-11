@@ -3,8 +3,10 @@ package view;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,6 +17,7 @@ public class MainWindow extends JFrame {
 
     MyPanel pCanvas;
     JSpinner sQuantity;
+    JComboBox<String> comboB;
     
     private void createWindow() {
         this.setPreferredSize(new Dimension(618, 726));
@@ -37,7 +40,12 @@ public class MainWindow extends JFrame {
         middlePanel.add(bShuffle);
         middlePanel.setMaximumSize(new Dimension(640, 50));
         this.add(middlePanel);
-
+        
+        
+        comboB = new JComboBox<String>();
+        comboB.addItem("Selecione o Tipo do Grafico");
+        middlePanel.add(comboB);
+       
         pCanvas = new MyPanel(this);
         this.add(pCanvas);
 
