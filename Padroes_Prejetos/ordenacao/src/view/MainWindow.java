@@ -1,11 +1,13 @@
 package view;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
 import javax.swing.BoxLayout;
 import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -18,6 +20,7 @@ public class MainWindow extends JFrame {
 
     MyPanel pCanvas;
     JSpinner sQuantity;
+    Draw[] Vd = {new Histogram(), new Line()};
     JComboBox comboB;
     
     private void createWindow() {
@@ -44,8 +47,10 @@ public class MainWindow extends JFrame {
         
         JLabel graficoT = new JLabel("	Tipo do Grafico: ");
         middlePanel.add(graficoT);  
-        Draw[] d = {new Histogram(), new Line()};
-        comboB = new MyComboBox(d);
+        
+        comboB = new JComboBox(new DefaultComboBoxModel(Vd));
+        
+        //comboB.add((Component) this.h);
         //comboB.addItem("Barra");
         //comboB.addItem("Linha");
         //comboB.add("Teste", new Histogram());
@@ -62,7 +67,7 @@ public class MainWindow extends JFrame {
         return sQuantity;
     }
     
-    public JComboBox<?> getComboValue(){
+    public JComboBox getComboBox(){
     	return comboB;
     }
     

@@ -30,6 +30,8 @@ public class MyPanel extends JPanel {
     public void shuffle() {
         int quantity = (Integer) this.frame.getsQuantity().getValue();
         this.createRandomizedArray(quantity);
+        Class<? extends Object> teste =  this.frame.getComboBox().getSelectedItem().getClass();
+        System.out.println(teste.toString());
         repaint();
     }
 
