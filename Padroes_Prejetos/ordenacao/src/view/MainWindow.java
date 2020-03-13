@@ -20,8 +20,8 @@ public class MainWindow extends JFrame {
 
     MyPanel pCanvas;
     JSpinner sQuantity;
-    Draw[] Vd = {new Histogram(), new Line()};
-    JComboBox comboB;
+    Draw[] drawOptions  = {new Histogram(), new Line()};
+    MyComboBox comboB;
     
     private void createWindow() {
         this.setPreferredSize(new Dimension(618, 726));
@@ -29,7 +29,7 @@ public class MainWindow extends JFrame {
         this.setVisible(true);
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JLabel titulo = new JLabel("OrdenaÃ§Ã£o");
+        JLabel titulo = new JLabel("Ordenação");
         titulo.setFont(new Font("Serif", Font.BOLD, 24));
         topPanel.add(titulo);
         topPanel.setMaximumSize(new Dimension(640, 50));
@@ -39,22 +39,22 @@ public class MainWindow extends JFrame {
         sQuantity = new JSpinner(new SpinnerNumberModel(25, 1, 2000, 1));
         sQuantity.setToolTipText("Quantity of numbers to sort");
         middlePanel.add(sQuantity);
+        //BTN
         JButton bShuffle = new JButton("Shuffle");
         bShuffle.addActionListener(ae -> pCanvas.shuffle());
+        JButton bSort = new JButton("Sort");
+        bSort.addActionListener(ae -> pCanvas.sort());
+        
         middlePanel.add(bShuffle);
+        middlePanel.add(bSort);
         middlePanel.setMaximumSize(new Dimension(640, 50));
         this.add(middlePanel);
         
-        JLabel graficoT = new JLabel("	Tipo do Grafico: ");
-        middlePanel.add(graficoT);  
+        JLabel graficoT = new JLabel("	Graphic Type: ");
+        middlePanel.add(graficoT); 
         
-        comboB = new JComboBox(new DefaultComboBoxModel(Vd));
+        comboB = new MyComboBox(drawOptions);
         
-        //comboB.add((Component) this.h);
-        //comboB.addItem("Barra");
-        //comboB.addItem("Linha");
-        //comboB.add("Teste", new Histogram());
-        //comboB.addItem("Pizza");
         middlePanel.add(comboB);
        
         pCanvas = new MyPanel(this);
@@ -67,7 +67,7 @@ public class MainWindow extends JFrame {
         return sQuantity;
     }
     
-    public JComboBox getComboBox(){
+    public MyComboBox getComboBox(){
     	return comboB;
     }
     

@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 public class MyPanel extends JPanel {
 
     MainWindow frame;
+    int pivoIdx = -1;
     
 		
     protected List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
@@ -30,9 +31,34 @@ public class MyPanel extends JPanel {
     public void shuffle() {
         int quantity = (Integer) this.frame.getsQuantity().getValue();
         this.createRandomizedArray(quantity);
-        Class<? extends Object> teste =  this.frame.getComboBox().getSelectedItem().getClass();
-        System.out.println(teste.toString());
+        pivoIdx = -1;
         repaint();
+    }
+    
+    public void sort() {
+    	boolean hadChange = true;
+    	int aux = 0;
+    	System.out.println("sort");
+    	
+    	while (hadChange) {
+    		hadChange = false;
+			for (int i = 0; i < numbers.size() - 1; i++) {
+				pivoIdx = i;
+				repaint();
+				if (numbers.get(i) > numbers.get(i+1)) {
+					aux = numbers.get(i);
+					numbers.set(i, numbers.get(i+1));
+					numbers.set(i+1, aux);
+					pivoIdx = i+1;
+					repaint();
+					hadChange = true;
+					System.out.println("mudou no numero: " +i);
+					
+				}			
+			}
+			
+		}
+    	pivoIdx = -2;
     }
 
     @Override
@@ -40,15 +66,6 @@ public class MyPanel extends JPanel {
         g.clearRect(0, 0, this.getWidth(), this.getHeight());
         g.setColor(Color.black);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
-        int outerSpace = 5;
-        int innerSpace = 1;
-        int QTD = numbers.size();
-        int width = (this.getWidth() - 2 * outerSpace - (QTD - 1) * innerSpace) / QTD;
-        int height = (this.getHeight() - 2 * outerSpace) / QTD;
-        g.setColor(Color.white);
-        for (int idx = 0; idx < QTD; idx++) {
-            int n = numbers.get(idx);
-            g.fillRect(idx * (width + innerSpace) + outerSpace, this.getHeight() - n * height - outerSpace, width, n * height);
-        }
+        this.frame.getComboBox().getDrawSelected().toDraw(this.pivoIdx, g, numbers, this.getHeight(), this.getHeight());
     }
 }
