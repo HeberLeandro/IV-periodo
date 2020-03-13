@@ -7,7 +7,7 @@ import java.util.List;
 public class Histogram implements Draw {
 
 	@Override
-	public void toDraw(int pivoInx, Graphics g, List<Integer> numbers, int PanelWidth, int PanelHeight) {
+	public void toDraw(int pivoInx, int comparado,Graphics g, List<Integer> numbers, int PanelWidth, int PanelHeight) {
         int outerSpace = 5;
         int innerSpace = 1;
         int QTD = numbers.size();
@@ -16,9 +16,12 @@ public class Histogram implements Draw {
         
         for (int idx = 0; idx < QTD; idx++) {
             int n = numbers.get(idx);
-            if (pivoInx > 0 && pivoInx == idx) {
+            if (pivoInx == idx) {
 				g.setColor(Color.red);
-			}
+            }
+            else if (comparado == idx) {
+            	g.setColor(Color.blue);
+            }
             else if (pivoInx == -2) {
             	g.setColor(Color.green);
             }else g.setColor(Color.white);

@@ -20,6 +20,7 @@ public class MainWindow extends JFrame {
 
     MyPanel pCanvas;
     JSpinner sQuantity;
+    JSpinner dQuantity;
     Draw[] drawOptions  = {new Histogram(), new Line()};
     MyComboBox comboB;
     
@@ -29,21 +30,33 @@ public class MainWindow extends JFrame {
         this.setVisible(true);
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JLabel titulo = new JLabel("Ordenação");
+        JLabel titulo = new JLabel("Sorting Algorithms");
         titulo.setFont(new Font("Serif", Font.BOLD, 24));
         topPanel.add(titulo);
         topPanel.setMaximumSize(new Dimension(640, 50));
         this.add(topPanel);
         
         JPanel middlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        sQuantity = new JSpinner(new SpinnerNumberModel(25, 1, 2000, 1));
+        
+        dQuantity = new JSpinner(new SpinnerNumberModel(1, 0, 1000, 5));
+        dQuantity.setToolTipText("Speed of Graphics Update");
+        middlePanel.add(dQuantity);
+        
+        sQuantity = new JSpinner(new SpinnerNumberModel(25, 10, 2000, 1));
         sQuantity.setToolTipText("Quantity of numbers to sort");
         middlePanel.add(sQuantity);
         //BTN
         JButton bShuffle = new JButton("Shuffle");
         bShuffle.addActionListener(ae -> pCanvas.shuffle());
         JButton bSort = new JButton("Sort");
-        bSort.addActionListener(ae -> pCanvas.sort());
+        bSort.addActionListener(ae -> 
+        	new Thread(new Runnable() {
+				@Override
+				public void run() {
+					pCanvas.bubbleSort();
+				}
+			}).start()
+        );
         
         middlePanel.add(bShuffle);
         middlePanel.add(bSort);
@@ -54,6 +67,7 @@ public class MainWindow extends JFrame {
         middlePanel.add(graficoT); 
         
         comboB = new MyComboBox(drawOptions);
+        comboB.addActionListener(ae -> pCanvas.repaint());
         
         middlePanel.add(comboB);
        
@@ -67,6 +81,9 @@ public class MainWindow extends JFrame {
         return sQuantity;
     }
     
+    public JSpinner getdQuantity() {
+        return dQuantity;
+    }
     public MyComboBox getComboBox(){
     	return comboB;
     }
