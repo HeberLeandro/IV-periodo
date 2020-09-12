@@ -9,22 +9,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.jdi.event.ExceptionEvent;
-
 import br.recife.edu.ifpe.model.classes.Funcionario;
+import br.recife.edu.ifpe.model.classes.ItemEstoque;
+import br.recife.edu.ifpe.model.classes.Produto;
+import br.recife.edu.ifpe.model.repositorios.RepositorioEstoque;
 import br.recife.edu.ifpe.model.repositorios.RepositorioFuncionario;
+import br.recife.edu.ifpe.model.repositorios.RepositorioProdutos;
 
 /**
- * Servlet implementation class ProtudoServlet
+ * Servlet implementation class ProdutoServlet
  */
-@WebServlet("/FuncionarioServlet")
-public class FuncionarioServlet extends HttpServlet {
+@WebServlet("/ProdutoServlet")
+public class ProdutoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
     /**
-     * Default constructor. 
+     * @see HttpServlet#HttpServlet()
      */
-    public FuncionarioServlet() {
+    public ProdutoServlet() {
         // TODO Auto-generated constructor stub
     }
 
@@ -41,21 +43,34 @@ public class FuncionarioServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Funcionario f = new Funcionario();
+		Produto p = new Produto();
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		try {
 			
 			int codigo = Integer.parseInt(request.getParameter("codigo"));
 			String nome = request.getParameter("nome");
-			String departamento = request.getParameter("departamento");
+			String marca = request.getParameter("marca");
+			String categoria = request.getParameter("categoria");
+			String descricao = request.getParameter("descricao");
 			
-			if (nome == "" || departamento == "") throw new Exception("Dados Vazios."); 
+			RepositorioProdutos.getCurrentInstance().create(p);
+			
+			ItemEstoque item = new ItemEstoque();
+			item.setProduto(p);
+			item.setQuantidade(0);
+			item.setCodigo(p.getCodigo());
+			
+			RepositorioEstoque.getCurrentInstance().read().addItem(item);
+			
+			if (nome == "" || marca == "" || categoria == "") throw new Exception("Dados Vazios."); 
 		
-			f.setCodigo(codigo);
-			f.setNome(nome);
-			f.setDepartamento(departamento);
-			RepositorioFuncionario.getCurrentInstance().create(f);
+			p.setCodigo(codigo);
+			p.setNome(nome);
+			p.setMarca(marca);
+			p.setCategoria(categoria);
+			p.setDescricao(descricao);
+			
 			
 			out.println("<!DOCTYPE 	html>");
 			out.println("<html>");
@@ -64,7 +79,7 @@ public class FuncionarioServlet extends HttpServlet {
 			out.println("<title>Resultado do Cadastro</title>");
 			out.println("</head>");
 			out.println("<body>");
-			out.println("<h1>Cadastro do funcionário, <i>"+ f.getCodigo() +"</i> realizado com sucesso!");
+			out.println("<h1>Cadastro do Produto, <i>"+ p.getNome() +"</i> realizado com sucesso!");
 			out.println("<a href=\"index.html\">Voltar a HOME</a> <h1>");
 			out.println();
 			out.println();
@@ -80,7 +95,7 @@ public class FuncionarioServlet extends HttpServlet {
 			out.println("<title>Resultado do Cadastro</title>");
 			out.println("</head>");
 			out.println("<body>");
-			out.println("<h1>Erro ao Realizar o Cadastro, Insira os Dados Corretamente.");
+			out.println("<h1>Erro ao Realizar o Cadastro, Insira os Dados Corretamente. <br>");
 			out.println("<a href=\"index.html\">Voltar a HOME</a> <h1>");
 			out.println();
 			out.println();
@@ -88,24 +103,6 @@ public class FuncionarioServlet extends HttpServlet {
 			out.println("</body>");
 			out.println("</html>");
 		}
-		
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
