@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.jdi.event.ExceptionEvent;
-
 import br.recife.edu.ifpe.model.classes.Funcionario;
 import br.recife.edu.ifpe.model.repositorios.RepositorioFuncionario;
 
@@ -55,6 +53,7 @@ public class FuncionarioServlet extends HttpServlet {
 			f.setCodigo(codigo);
 			f.setNome(nome);
 			f.setDepartamento(departamento);
+			
 			RepositorioFuncionario.getCurrentInstance().create(f);
 			
 			out.println("<!DOCTYPE 	html>");
@@ -81,7 +80,7 @@ public class FuncionarioServlet extends HttpServlet {
 			out.println("</head>");
 			out.println("<body>");
 			out.println("<h1>Erro ao Realizar o Cadastro, Insira os Dados Corretamente.");
-			out.println("<a href=\"index.html\">Voltar a HOME</a> <h1>");
+			out.println("<a href=\"cadastrofuncionario.html\">Voltar ao Cadastro</a> <h1>");
 			out.println();
 			out.println();
 			out.println();
