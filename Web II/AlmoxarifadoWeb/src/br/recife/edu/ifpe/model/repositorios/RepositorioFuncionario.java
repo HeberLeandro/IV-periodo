@@ -9,10 +9,7 @@ import br.recife.edu.ifpe.model.classes.Funcionario;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author debora
- */
+
 public class RepositorioFuncionario {
     private static RepositorioFuncionario myself = null;
     
@@ -45,6 +42,11 @@ public class RepositorioFuncionario {
             }
         }
         
+    }
+    
+    public int gerarCodigo() {
+    	int aux = 1;
+    	return aux + this.funcionarios.size();
     }
     
     public Funcionario read(int codigo){

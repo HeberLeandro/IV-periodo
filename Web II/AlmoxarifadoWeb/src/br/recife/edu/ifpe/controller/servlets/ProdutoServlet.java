@@ -93,7 +93,6 @@ public class ProdutoServlet extends HttpServlet {
 						+ "bootstrap.min.css\" integrity=\"sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z\" crossorigin=\"anonymous\">");
 				out.println("</head>");
 				out.println("<body>");
-				out.println("</tbody>");
 				out.println("<div class=\"container\">\r\n" + "	<div class=\"row justify-content-center\">\r\n"
 						+ "		\r\n" + "	\r\n" + "		<div class=\"col-7 mt-5\">\r\n"
 						+ "		<h1 class=\"h2 mb-5\">Atualizar Produto</h1>\r\n"

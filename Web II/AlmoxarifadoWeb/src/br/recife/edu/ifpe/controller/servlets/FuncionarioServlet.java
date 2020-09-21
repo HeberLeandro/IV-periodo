@@ -44,13 +44,13 @@ public class FuncionarioServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		try {
 			
-			int codigo = Integer.parseInt(request.getParameter("codigo"));
+			//int codigo = Integer.parseInt(request.getParameter("codigo"));
 			String nome = request.getParameter("nome");
 			String departamento = request.getParameter("departamento");
 			
 			if (nome == "" || departamento == "") throw new Exception("Dados Vazios."); 
 		
-			f.setCodigo(codigo);
+			f.setCodigo(RepositorioFuncionario.getCurrentInstance().gerarCodigo());
 			f.setNome(nome);
 			f.setDepartamento(departamento);
 			
