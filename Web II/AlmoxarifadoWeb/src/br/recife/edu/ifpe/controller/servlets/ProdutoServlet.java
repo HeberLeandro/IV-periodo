@@ -152,8 +152,8 @@ public class ProdutoServlet extends HttpServlet {
 			out.println("</head>");
 			out.println("<body>");
 			out.println("<div class=\"container\"> <div class=\"row\"> <div class=\"col\">");
-			out.println("<h1>Produto Selecionado</h1>");
-			out.println("<a href=\"index.html\">Voltar a Home.</a> </dir>");
+			out.println("<h1>Lista de Produtos</h1>");
+			out.println("<a href=\"index.html\">Voltar a Home.</a> </div>");
 			out.println("<div class=\"col-12 mt-1\">");
 			out.println("<table class=\"table table-hover\">");
 			out.println("<thead>\r\n" + "    <tr>\r\n" + "      <th scope=\"col\">Código</th>\r\n"

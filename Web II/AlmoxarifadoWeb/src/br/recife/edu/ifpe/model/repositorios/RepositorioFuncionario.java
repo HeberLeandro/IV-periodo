@@ -14,6 +14,7 @@ public class RepositorioFuncionario {
     private static RepositorioFuncionario myself = null;
     
     private List<Funcionario> funcionarios = null;
+    private int contador = 0;
     
     private RepositorioFuncionario(){
         this.funcionarios = new ArrayList<>();
@@ -45,8 +46,8 @@ public class RepositorioFuncionario {
     }
     
     public int gerarCodigo() {
-    	int aux = 1;
-    	return aux + this.funcionarios.size();
+    	
+    	return this.contador += 1;
     }
     
     public Funcionario read(int codigo){
