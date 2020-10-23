@@ -19,7 +19,7 @@
 		
 			<div class="col">
 				<h1 class="h1">Lista de Funcionarios</h1>
-				<button type="button" class="btn btn-sm mb-1 btn-secondary" onclick="window.location.href='index.html'">Voltar à Home</button>
+				<button type="button" class="btn btn-sm mb-1 btn-secondary" onclick="window.location.href='index.html'">Home</button>
 				<button type="button" class="btn btn-sm mb-1 btn-primary" onclick="window.location.href='cadastrofuncionario.jsp'">Cadastrar Funcionario</button>
 				
 			</div>

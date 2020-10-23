@@ -32,6 +32,8 @@
 						<tr> 
 							<th scope="col">Código</th>
 					     	<th scope="col">Nome</th> 
+					     	<th scope="col">Marca</th> 
+					     	<th scope="col">Categoria</th> 
 					     	<th scope="col">Quantidade</th>
 						</tr> 
 					</thead>
@@ -42,6 +44,8 @@
 						<tr>
 							<th scope="row"><c:out value="${item.codigo}"></c:out></th>
 							<td><c:out value="${item.produto.nome}"></c:out></td>
+							<td><c:out value="${item.produto.marca}"></c:out></td>
+							<td><c:out value="${item.produto.categoria}"></c:out></td>
 							<td><c:out value="${item.quantidade}"></c:out></td>
 						</tr>
 					</c:forEach>

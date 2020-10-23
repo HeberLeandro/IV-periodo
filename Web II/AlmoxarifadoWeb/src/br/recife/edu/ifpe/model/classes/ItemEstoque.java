@@ -36,5 +36,18 @@ public class ItemEstoque {
         this.quantidade = quantidade;
     }
     
+    public void adiciona(int quantidade) {
+        this.quantidade += quantidade;
+    }
+    
+    public void diminui(int quantidade) {
+    	if((this.quantidade - quantidade) >= 0) {
+    		this.quantidade -= quantidade;
+    	}else {
+    		this.quantidade = 0;
+    	}
+        
+    }
+    
     
 }

@@ -36,4 +36,13 @@ public class Estoque {
     public void addItem(ItemEstoque i){
         this.itens.add(i);
     }
+    
+    public ItemEstoque getItem(int codigo) {
+    	for(ItemEstoque i : this.itens) {
+    		if (i.getCodigo() == codigo) {
+    			return i;
+    		}
+    	}
+    	return null;
+    }
 }
