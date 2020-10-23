@@ -14,6 +14,7 @@ public class RepositorioProdutos {
     private static RepositorioProdutos myself = null;
     
     private List<Produto> produtos = null;
+	private int contador;
     
     private RepositorioProdutos(){
         this.produtos = new ArrayList<>();
@@ -44,6 +45,10 @@ public class RepositorioProdutos {
             }
         }
         
+    }
+    
+    public int gerarCodigo() {
+    	return this.contador += 1;
     }
     
     public Produto read(int codigo){

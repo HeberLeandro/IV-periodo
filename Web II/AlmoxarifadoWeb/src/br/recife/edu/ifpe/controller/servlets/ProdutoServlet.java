@@ -231,7 +231,6 @@ public class ProdutoServlet extends HttpServlet {
 		
 		try {
 
-			int codigo = Integer.parseInt(request.getParameter("codigo"));
 			String nome = request.getParameter("nome");
 			String marca = request.getParameter("marca");
 			String categoria = request.getParameter("categoria");
@@ -240,14 +239,15 @@ public class ProdutoServlet extends HttpServlet {
 			if (nome == "" || marca == "" || categoria == "")
 				throw new Exception("Dados Vazios.");
 
-			p.setCodigo(codigo);
+			p.setCodigo(RepositorioProdutos.getCurrentInstance().gerarCodigo());
 			p.setNome(nome);
 			p.setMarca(marca);
 			p.setCategoria(categoria);
 			p.setDescricao(descricao);
 			
 			if (atualizar != null) {
-				
+				int codigo = Integer.parseInt(request.getParameter("codigo"));
+				p.setCodigo(codigo);
 				RepositorioProdutos.getCurrentInstance().update(p);
 				
 			} else {

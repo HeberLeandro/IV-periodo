@@ -9,24 +9,19 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Insert title here</title>
+	<title>Funcionarios</title>
 	<!-- Boostrap CSS only -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 </head>
-    <script type="text/javascript">
-	function funcionarioSelecionado(codigo){
-		sessionStorage.setItem("funcionario", codigo);
-	}
-    
-    </script>
 <body>
 	<div class="container">
 		<div class="row justify-content-center">
 		
 			<div class="col">
 				<h1 class="h1">Lista de Funcionarios</h1>
-				<button type="button" class="btn btn-sm mb-1 btn-primary" onclick="window.location.href='cadastrofuncionario.jsp'">Cadastrar Funcionario</button>
 				<button type="button" class="btn btn-sm mb-1 btn-secondary" onclick="window.location.href='index.html'">Voltar à Home</button>
+				<button type="button" class="btn btn-sm mb-1 btn-primary" onclick="window.location.href='cadastrofuncionario.jsp'">Cadastrar Funcionario</button>
+				
 			</div>
 			<div class="col-12 mt-1">	
 				<table class="table table-hover">
@@ -62,11 +57,6 @@
 				</table>
 				
 			</div>
-	
-	
-	
-	
-	
 	
 		</div>
 	</div><!-- Container -->	

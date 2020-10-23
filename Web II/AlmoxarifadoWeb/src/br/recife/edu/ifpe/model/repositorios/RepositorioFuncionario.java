@@ -46,7 +46,6 @@ public class RepositorioFuncionario {
     }
     
     public int gerarCodigo() {
-    	
     	return this.contador += 1;
     }
     
