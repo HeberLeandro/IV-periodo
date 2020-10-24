@@ -9,25 +9,28 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import br.recife.edu.ifpe.model.classes.Estoque;
-import br.recife.edu.ifpe.model.classes.ItemEntrada;
+import br.recife.edu.ifpe.model.classes.Funcionario;
+import br.recife.edu.ifpe.model.classes.ItemSaida;
 import br.recife.edu.ifpe.model.classes.ItemEstoque;
-import br.recife.edu.ifpe.model.classes.LoteEntrada;
+import br.recife.edu.ifpe.model.classes.ItemSaida;
+import br.recife.edu.ifpe.model.classes.LoteSaida;
 import br.recife.edu.ifpe.model.classes.Produto;
 import br.recife.edu.ifpe.model.repositorios.RepositorioEstoque;
-import br.recife.edu.ifpe.model.repositorios.RepositorioLoteEntrada;
+import br.recife.edu.ifpe.model.repositorios.RepositorioFuncionario;
+import br.recife.edu.ifpe.model.repositorios.RepositorioLoteSaida;
 import br.recife.edu.ifpe.model.repositorios.RepositorioProdutos;
 
 /**
  * Servlet implementation class LoteEntradaServlet
  */
-@WebServlet("/LoteEntradaServlet")
-public class LoteEntradaServlet extends HttpServlet {
+@WebServlet("/LoteSaidaServlet")
+public class LoteSaidaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoteEntradaServlet() {
+    public LoteSaidaServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -47,27 +50,39 @@ public class LoteEntradaServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		try {
-			LoteEntrada lE = (LoteEntrada)session.getAttribute("loteEntrada");
-			if (lE == null) throw new Exception("LoteEntrada Vazio.");
+			int funcCod = Integer.parseInt(request.getParameter("funcionario"));
+			LoteSaida lS = (LoteSaida)session.getAttribute("loteSaida");
+			if (lS == null) throw new Exception("LoteSaida Vazio.");
 			
 			Estoque estoque = RepositorioEstoque.getCurrentInstance().read();
 			
-			for (ItemEntrada itemEntrada : lE.getItens()) {
+			Funcionario funcionario = RepositorioFuncionario.getCurrentInstance().read(funcCod);
+			
+			for (ItemSaida itemSaida : lS.getItens()) {
 				for(ItemEstoque itemEstoque : estoque.getItens()) {
-					if (itemEntrada.getCodigo() == itemEstoque.getCodigo()) {
-						itemEstoque.adiciona(itemEntrada.getQuantidade());
+					if (itemSaida.getCodigo() == itemEstoque.getCodigo()) {
+						if (itemEstoque.getQuantidade() == 0) {
+							session.removeAttribute("loteSaida");
+							throw new Exception("Não há itens para serem retirados do estoque.");
+						}
+						itemEstoque.diminui(itemSaida.getQuantidade());
+
 						break;
 					}
 				}
 			}
 			
-			RepositorioLoteEntrada.getCurrentInstance().create(lE);
+			System.out.println("responsavel "+funcionario.getNome());
 			
-			session.removeAttribute("loteEntrada");
-			session.setAttribute("msgSuccess", "O Lote de Entrada foi inserido.");
+			lS.setResponsavel(funcionario);
+			
+			RepositorioLoteSaida.getCurrentInstance().create(lS);
+			
+			session.removeAttribute("loteSaida");
+			session.setAttribute("msgSuccess", "O Lote de Saida foi Retirado.");
 			
 		} catch (Exception e) {
-			session.setAttribute("msgError", "Falha ao inserir Lote de Entrada.");
+			session.setAttribute("msgError", "Falha ao Retirar Lote de Saida.");
 		}
 		
 		
@@ -84,21 +99,21 @@ public class LoteEntradaServlet extends HttpServlet {
 	        if(qtd > 100) qtd = 100;
 	        else if (qtd < 0) qtd = 0;
 
-	        LoteEntrada lE = (LoteEntrada) session.getAttribute("loteEntrada");
+	        LoteSaida lS = (LoteSaida) session.getAttribute("loteSaida");
 	        
-	        if (lE == null) {
-	            lE = new LoteEntrada();
+	        if (lS == null) {
+	            lS = new LoteSaida();
 
-	            session.setAttribute("loteEntrada", lE);
+	            session.setAttribute("loteSaida", lS);
 	        }
 
 	        boolean controle = false;
-	        for (ItemEntrada i : lE.getItens()) {
+	        for (ItemSaida i : lS.getItens()) {
 	            if (i.getProduto().getCodigo() == codigo) {
 	                i.setQuantidade(qtd);
 	                controle = true;
 	            	if (qtd == 0) {
-						lE.getItens().remove(i);
+						lS.getItens().remove(i);
 					}
 	                break;
 	            }
@@ -106,7 +121,7 @@ public class LoteEntradaServlet extends HttpServlet {
 
 	        if (!controle) {
             	if (qtd != 0) {
-    	            ItemEntrada item = new ItemEntrada();
+    	            ItemSaida item = new ItemSaida();
 
     	            Produto p = RepositorioProdutos.getCurrentInstance().read(codigo);
 
@@ -114,13 +129,13 @@ public class LoteEntradaServlet extends HttpServlet {
     	            item.setCodigo(p.getCodigo());
     	            item.setQuantidade(qtd);
 
-    	            lE.addItem(item);
+    	            lS.addItem(item);
     	        }
 			}
 
 	        
-	        if (lE.getItens().isEmpty()) {
-				session.removeAttribute("loteEntrada");
+	        if (lS.getItens().isEmpty()) {
+				session.removeAttribute("loteSaida");
 			}
 	        
 		} catch (Exception e) {

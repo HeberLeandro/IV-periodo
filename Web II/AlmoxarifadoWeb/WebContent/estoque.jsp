@@ -23,7 +23,7 @@
 				<h1 class="h1">Produtos no Estoque</h1>
 				<button type="button" class="btn btn-sm mb-1 btn-secondary" onclick="window.location.href='index.html'">Home</button>
 				<button type="button" class="btn btn-sm mb-1 btn-primary" onclick="window.location.href='loteentrada.jsp'">Cadastrar Lote de Entrada</button>
-				<button type="button" class="btn btn-sm mb-1 btn-primary" onclick="window.location.href='#'">Cadastrar Lote de Saida</button>
+				<button type="button" class="btn btn-sm mb-1 btn-primary" onclick="window.location.href='lotesaida.jsp'">Cadastrar Lote de Saida</button>
 				
 			</div>
 			<div class="col-12 mt-1">	
@@ -31,7 +31,7 @@
 					<thead>
 						<tr> 
 							<th scope="col">Código</th>
-					     	<th scope="col">Nome</th> 
+					     	<th scope="col">Produto</th> 
 					     	<th scope="col">Marca</th> 
 					     	<th scope="col">Categoria</th> 
 					     	<th scope="col">Quantidade</th>

@@ -31,4 +31,9 @@
       <body-content>scriptless</body-content>
       <tag-class>br.recife.edu.ifpe.controller.tags.CarregaProdutos</tag-class>
   </tag>
+  <tag>
+      <name>carregafuncionarios</name>
+      <body-content>scriptless</body-content>
+      <tag-class>br.recife.edu.ifpe.controller.tags.CarregaFuncionarios</tag-class>
+  </tag>
 </taglib>

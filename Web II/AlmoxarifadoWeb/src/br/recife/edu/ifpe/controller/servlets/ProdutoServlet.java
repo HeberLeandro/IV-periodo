@@ -157,7 +157,7 @@ public class ProdutoServlet extends HttpServlet {
 			out.println("<div class=\"col-12 mt-1\">");
 			out.println("<table class=\"table table-hover\">");
 			out.println("<thead>\r\n" + "    <tr>\r\n" + "      <th scope=\"col\">Código</th>\r\n"
-					+ "      <th scope=\"col\">Nome</th>\r\n" + "      <th scope=\"col\">Marca</th>\r\n"
+					+ "      <th scope=\"col\">Produto</th>\r\n" + "      <th scope=\"col\">Marca</th>\r\n"
 					+ "      <th scope=\"col\">Categoria</th>\r\n" + "      <th scope=\"col\">Operações</th>\r\n"
 					+ "    </tr>\r\n" + "  </thead>");
 			out.println("<tbody>");

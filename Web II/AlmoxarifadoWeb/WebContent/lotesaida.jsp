@@ -11,7 +11,7 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Lote de Entrada</title>
+	<title>Lote de Saida</title>
 	<!-- Boostrap CSS only -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 </head>
@@ -39,11 +39,10 @@
 		<div class="row justify-content-center">
 		
 			<div class="col">
-				<h1 class="h1">Cadastro do Lote de Entrada</h1>
+				<h1 class="h1">Cadastro do Lote de Saida</h1>
 				<button type="button" class="btn btn-sm mb-1 btn-secondary" onclick="window.location.href='index.html'">Home</button>
 				<button type="button" class="btn btn-sm mb-1 btn-primary" onclick="window.location.href='estoque.jsp'">Estoque</button>
-				<button type="button" class="btn btn-sm mb-1 btn-primary" onclick="window.location.href='cadastroproduto.html'">Cadastrar Produto</button>
-				
+				<button type="button" class="btn btn-sm mb-1 btn-primary" onclick="window.location.href='cadastrofuncionario.jsp'">Cadastrar Funcionario</button>					
 			</div>
 			<div class="col-12 mx-1">	
 				<table class="table table-hover">
@@ -54,10 +53,11 @@
 					     	<th scope="col">Marca</th>
 					     	<th scope="col">Categoria</th>
 					     	<th scope="col">Qtd. em Estoque</th>
-					     	<th scope="col">Qtd. para o Lote de Entrada</th>
+					     	<th scope="col">Qtd. para o Lote de Saida</th>
 						</tr> 
 					</thead>
 					<tbody>
+					
 					<my:carregaestoque/>
 					
 					<c:forEach var="item" items="${estoque.getItens()}">
@@ -79,8 +79,8 @@
 					</tbody>
 				</table>
 			</div>
-			
-			<c:if test="${loteEntrada != null}">
+			<my:carregafuncionarios/>
+			<c:if test="${loteSaida != null}">
 				<div class="col-12 mt-2">
 				<h2 class="h2">Quantidade Selecionada</h2>
 					<table class="table table-hover table-bordered">
@@ -95,7 +95,7 @@
 						</thead>
 						<tbody>
 						
-						<c:forEach var="item" items="${loteEntrada.itens}">
+						<c:forEach var="item" items="${loteSaida.itens}">
 							<tr>
 								<th scope="row"><c:out value="${item.codigo}"></c:out></th>
 								<td><c:out value="${item.produto.nome}"></c:out></td>
@@ -113,6 +113,12 @@
 						</tbody>
 						
 					</table>
+					<label><strong>Funcionario Resposável pelo Lote:</strong></label>
+				    <select class="form-control" id="funcionario">
+				    	<c:forEach var="f" items="${funcionarios}">
+				      		<option value="${f.getCodigo()}"><c:out value="${f.getNome()}"></c:out></option>
+						</c:forEach>
+				    </select>
 					<button class="btn btn-success  my-2" onclick="cadastrar()">Cadastrar</button>
 				</div>
 			</c:if>
@@ -133,21 +139,26 @@
 				aux = qtd.value;
 			}
 			
-		    fetch("LoteEntradaServlet?qtd="+aux+"&codigo=" + codigo, {method: "put"})
+		    fetch("LoteSaidaServlet?qtd="+aux+"&codigo=" + codigo, {method: "put"})
 		            .then(function () {
-		                location.reload();
+		               location.reload();
 		            });
 		}
 		
 		function remover(codigo){
-			 fetch("LoteEntradaServlet?qtd=0&codigo=" + codigo, {method: "put"})
+			 fetch("LoteSaidaServlet?qtd=0&codigo=" + codigo, {method: "put"})
 	            .then(function () {
 	                location.reload();
 	            });
 		}
 		
 		function cadastrar(codigo){
-			 fetch("LoteEntradaServlet", {method: "post"})
+			var funcionario = document.getElementById("funcionario").value;
+			if (funcionario == '') {
+				window.alert("É nescessario um Funcionario Responsável.");
+				return;
+			}
+			 fetch("LoteSaidaServlet?funcionario="+funcionario, {method: "post"})
 	            .then(function () {
 	                location.reload();
 	            });
