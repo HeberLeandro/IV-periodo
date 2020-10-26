@@ -72,9 +72,9 @@ public class LoteSaidaServlet extends HttpServlet {
 				}
 			}
 			
-			System.out.println("responsavel "+funcionario.getNome());
 			
 			lS.setResponsavel(funcionario);
+			lS.setCodigo(RepositorioLoteSaida.getCurrentInstance().gerarCodigo());
 			
 			RepositorioLoteSaida.getCurrentInstance().create(lS);
 			

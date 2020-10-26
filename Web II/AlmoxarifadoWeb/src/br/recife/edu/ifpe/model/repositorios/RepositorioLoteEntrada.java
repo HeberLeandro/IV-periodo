@@ -14,6 +14,8 @@ public class RepositorioLoteEntrada {
     private static RepositorioLoteEntrada myself = null;
     
     private List<LoteEntrada> lotes = null;
+
+	private int contador = 0;
     
     private RepositorioLoteEntrada(){
         this.lotes = new ArrayList<>();
@@ -60,4 +62,7 @@ public class RepositorioLoteEntrada {
         return this.lotes;
     }
     
+    public int gerarCodigo() {
+    	return this.contador += 1;
+    }
 }

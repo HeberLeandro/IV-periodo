@@ -60,6 +60,8 @@ public class LoteEntradaServlet extends HttpServlet {
 				}
 			}
 			
+			lE.setCodigo(RepositorioLoteEntrada.getCurrentInstance().gerarCodigo());
+			
 			RepositorioLoteEntrada.getCurrentInstance().create(lE);
 			
 			session.removeAttribute("loteEntrada");
