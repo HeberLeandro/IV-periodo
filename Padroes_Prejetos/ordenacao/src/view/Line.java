@@ -7,7 +7,7 @@ import java.util.List;
 public class Line implements Draw{
 
 		@Override
-	public void toDraw(int pivoInx, int comparado,Graphics g, List<Integer> numbers, int PanelWidth, int PanelHeight) {
+	public void toDraw(Graphics g, List<Integer> numbers, int PanelWidth, int PanelHeight) {
 	        g.setColor(Color.white);
 	        int outerSpace = 5;
 	        int innerSpace = 2;
@@ -27,13 +27,9 @@ public class Line implements Draw{
 	        g.drawPolyline(x, y, QTD);
 	}
 		
-		
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "Line";
 	}
-
-
-
 }

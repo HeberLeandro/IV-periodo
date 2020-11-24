@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.ComboBoxModel;
@@ -23,6 +25,7 @@ public class MainWindow extends JFrame {
     JSpinner dQuantity;
     Draw[] drawOptions  = {new Histogram(), new Line()};
     MyComboBox comboB;
+    List<Thread> threadAux = new ArrayList<Thread>();
     
     private void createWindow() {
         this.setPreferredSize(new Dimension(618, 726));
@@ -49,13 +52,16 @@ public class MainWindow extends JFrame {
         JButton bShuffle = new JButton("Shuffle");
         bShuffle.addActionListener(ae -> pCanvas.shuffle());
         JButton bSort = new JButton("Sort");
+        
+//        Thread t = new Thread(new Runnable() {
+//  			@Override
+//  			public void run() {
+//  				pCanvas.orderMethods.bubbleSort((Integer)dQuantity.getValue());
+//  			}
+//  		});
+        
         bSort.addActionListener(ae -> 
-        	new Thread(new Runnable() {
-				@Override
-				public void run() {
-					pCanvas.bubbleSort();
-				}
-			}).start()
+        	callThread()
         );
         
         middlePanel.add(bShuffle);
@@ -76,7 +82,21 @@ public class MainWindow extends JFrame {
 
         this.pack();
     }
-
+    
+    public void callThread() {
+    	if(!threadAux.isEmpty()) threadAux.get(threadAux.size() -1).interrupt();
+    	
+    	Thread aux = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					pCanvas.orderMethods.bubbleSort((Integer)dQuantity.getValue());
+				}
+		});
+    	aux.start();
+		threadAux.add(aux);
+    		
+    }
+    
     public JSpinner getsQuantity() {
         return sQuantity;
     }
