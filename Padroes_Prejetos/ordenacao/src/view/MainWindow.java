@@ -28,7 +28,7 @@ public class MainWindow extends JFrame {
     List<Thread> threadAux = new ArrayList<Thread>();
     
     private void createWindow() {
-        this.setPreferredSize(new Dimension(618, 726));
+        this.setPreferredSize(new Dimension(600, 700));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
@@ -61,7 +61,13 @@ public class MainWindow extends JFrame {
 //  		});
         
         bSort.addActionListener(ae -> 
-        	callThread()
+        	{
+				try {
+					callThread();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
         );
         
         middlePanel.add(bShuffle);
@@ -83,13 +89,13 @@ public class MainWindow extends JFrame {
         this.pack();
     }
     
-    public void callThread() {
-    	if(!threadAux.isEmpty()) threadAux.get(threadAux.size() -1).interrupt();
+    public void callThread() throws InterruptedException {
+    	if(!threadAux.isEmpty()) threadAux.get(threadAux.size() -1).stop();
     	
     	Thread aux = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					pCanvas.orderMethods.bubbleSort((Integer)dQuantity.getValue());
+					pCanvas.orderMethods.bubbleSort();
 				}
 		});
     	aux.start();

@@ -5,6 +5,7 @@ import java.util.Observable;
 
 public class OrderMethods extends Observable {
 	protected List<Integer> numbers;
+	private Integer delay;
 	
 	public OrderMethods(List<Integer> numbers) {
 		this.numbers = numbers;
@@ -17,7 +18,7 @@ public class OrderMethods extends Observable {
 	}
 
 	
-    public void bubbleSort(Integer delay) {
+    public void bubbleSort() {
     	boolean hadChange = true;
     	int aux = 0;
     	
@@ -38,4 +39,8 @@ public class OrderMethods extends Observable {
 		}
     	arrayChanged();
     }
+    
+    public void setDelay(Integer delay) {
+		this.delay = delay;
+	}
 }

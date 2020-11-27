@@ -21,6 +21,7 @@ public class MyPanel extends JPanel implements Observer {
     public MyPanel(MainWindow mw) {
         this.frame = mw;
         this.orderMethods = new OrderMethods(this.numbers);
+        orderMethods.setDelay((Integer)this.frame.getdQuantity().getValue());
         orderMethods.addObserver(this);
 
     }
@@ -45,6 +46,7 @@ public class MyPanel extends JPanel implements Observer {
         g.clearRect(0, 0, this.getWidth(), this.getHeight());
         g.setColor(Color.black);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        orderMethods.setDelay((Integer)this.frame.getdQuantity().getValue());
         this.frame.getComboBox().getDrawSelected().toDraw(g, numbers, this.getHeight(), this.getHeight());
     }
 
