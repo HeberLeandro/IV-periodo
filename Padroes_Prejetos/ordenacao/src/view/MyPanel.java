@@ -14,16 +14,16 @@ import javax.swing.JPanel;
 public class MyPanel extends JPanel implements Observer {
 
     MainWindow frame;
-	OrderMethods orderMethods;
+	OrderMethod orderMethod;
   
     protected List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
 
     public MyPanel(MainWindow mw) {
         this.frame = mw;
-        this.orderMethods = new OrderMethods(this.numbers);
-        orderMethods.setDelay((Integer)this.frame.getdQuantity().getValue());
-        orderMethods.addObserver(this);
-
+        this.orderMethod = new BubbleSort();
+        orderMethod.setNumbers(this.numbers);
+        orderMethod.setDelay((Integer)this.frame.getdQuantity().getValue());
+        orderMethod.addObserver(this);
     }
     
     private void createRandomizedArray(int qtd) {
@@ -37,7 +37,7 @@ public class MyPanel extends JPanel implements Observer {
     public void shuffle() {
         int quantity = (Integer) this.frame.getsQuantity().getValue();
         this.createRandomizedArray(quantity);
-        this.orderMethods.numbers = this.numbers;
+        this.orderMethod.numbers = this.numbers;
         repaint();
     }
     
@@ -46,14 +46,28 @@ public class MyPanel extends JPanel implements Observer {
         g.clearRect(0, 0, this.getWidth(), this.getHeight());
         g.setColor(Color.black);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
-        orderMethods.setDelay((Integer)this.frame.getdQuantity().getValue());
-        this.frame.getComboBox().getDrawSelected().toDraw(g, numbers, this.getHeight(), this.getHeight());
+        orderMethod.setDelay((Integer)this.frame.getdQuantity().getValue()); // Atualiza o delay da ordenação
+        this.frame.getGraphComboBox().getDrawSelected().toDraw(g, numbers, this.getHeight(), this.getHeight()); // Chama o grafico selecionado para pintar a tela
     }
 
 	@Override
 	public void update(Observable o, Object arg) {
-//		OrderMethods aux = (OrderMethods) o;
-//		this.orderMethods.numbers = aux.
 		repaint();
+	}
+	
+	public void sort() {
+		orderMethod.sort();
+	}
+
+	public void updateOrderMethod() {
+		this.orderMethod = this.frame.getMethodsComboBox().getMethodSelected();
+		orderMethod.setNumbers(this.numbers);
+        orderMethod.setDelay((Integer)this.frame.getdQuantity().getValue());
+        orderMethod.addObserver(this);
+        try {
+			this.frame.callSortThread();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }

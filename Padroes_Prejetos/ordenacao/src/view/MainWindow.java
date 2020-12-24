@@ -24,11 +24,13 @@ public class MainWindow extends JFrame {
     JSpinner sQuantity;
     JSpinner dQuantity;
     Draw[] drawOptions  = {new Histogram(), new Line()};
-    MyComboBox comboB;
+    GraphComboBox comboGraph;
+    MethodsFactoryComboBox comboMethods;
+    OrderMethod[] orderOptions = {new BubbleSort(), new InsertionSort()};
     List<Thread> threadAux = new ArrayList<Thread>();
     
     private void createWindow() {
-        this.setPreferredSize(new Dimension(600, 700));
+        this.setPreferredSize(new Dimension(800, 900));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
@@ -53,35 +55,43 @@ public class MainWindow extends JFrame {
         bShuffle.addActionListener(ae -> pCanvas.shuffle());
         JButton bSort = new JButton("Sort");
         
-//        Thread t = new Thread(new Runnable() {
-//  			@Override
-//  			public void run() {
-//  				pCanvas.orderMethods.bubbleSort((Integer)dQuantity.getValue());
-//  			}
-//  		});
-        
         bSort.addActionListener(ae -> 
         	{
 				try {
-					callThread();
+					callSortThread();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
         );
         
+        
+        
         middlePanel.add(bShuffle);
         middlePanel.add(bSort);
-        middlePanel.setMaximumSize(new Dimension(640, 50));
+        middlePanel.setMaximumSize(new Dimension(750, 50));
         this.add(middlePanel);
         
-        JLabel graficoT = new JLabel("	Graphic Type: ");
+        JLabel graficoT = new JLabel("	Graphic Type:	");
         middlePanel.add(graficoT); 
         
-        comboB = new MyComboBox(drawOptions);
-        comboB.addActionListener(ae -> pCanvas.repaint());
+        //combo box dos Graficos
+        comboGraph = new GraphComboBox(drawOptions);
+        comboGraph.addActionListener(ae -> pCanvas.repaint());
+        middlePanel.add(comboGraph);
         
-        middlePanel.add(comboB);
+        JLabel sort = new JLabel("	Order Methods:	");
+        middlePanel.add(sort); 
+        // combo Box Ordenação 
+        comboMethods = new MethodsFactoryComboBox(orderOptions);
+        middlePanel.add(comboMethods);middlePanel.add(comboMethods);
+        comboMethods.addActionListener(ae -> pCanvas.updateOrderMethod());
+        
+        //Stop Button
+        JButton bStop = new JButton("Stop");
+        bStop.addActionListener(ae -> stopSortThread());
+        middlePanel.add(bStop);
+        
        
         pCanvas = new MyPanel(this);
         this.add(pCanvas);
@@ -89,18 +99,23 @@ public class MainWindow extends JFrame {
         this.pack();
     }
     
-    public void callThread() throws InterruptedException {
-    	if(!threadAux.isEmpty()) threadAux.get(threadAux.size() -1).stop();
+    public void callSortThread() throws InterruptedException {
+    	if(!threadAux.isEmpty()) stopSortThread();
     	
     	Thread aux = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					pCanvas.orderMethods.bubbleSort();
+					pCanvas.sort();
 				}
 		});
     	aux.start();
 		threadAux.add(aux);
     		
+    }
+    
+    public void stopSortThread() {
+    	threadAux.get(threadAux.size() -1).stop();
+    	threadAux.remove(threadAux.get(threadAux.size() -1));
     }
     
     public JSpinner getsQuantity() {
@@ -110,8 +125,13 @@ public class MainWindow extends JFrame {
     public JSpinner getdQuantity() {
         return dQuantity;
     }
-    public MyComboBox getComboBox(){
-    	return comboB;
+    
+    public GraphComboBox getGraphComboBox(){
+    	return comboGraph;
+    }
+    
+    public MethodsFactoryComboBox getMethodsComboBox(){
+    	return comboMethods;
     }
     
     public MainWindow() {

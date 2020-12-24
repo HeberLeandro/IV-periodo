@@ -3,22 +3,9 @@ package view;
 import java.util.List;
 import java.util.Observable;
 
-public class OrderMethods extends Observable {
-	protected List<Integer> numbers;
-	private Integer delay;
+public class BubbleSort extends OrderMethod{
 	
-	public OrderMethods(List<Integer> numbers) {
-		this.numbers = numbers;
-	}
-	
-	@SuppressWarnings("deprecation")
-	public void arrayChanged () {
-		setChanged();
-		notifyObservers();
-	}
-
-	
-    public void bubbleSort() {
+    public void sort() {
     	boolean hadChange = true;
     	int aux = 0;
     	
@@ -38,9 +25,11 @@ public class OrderMethods extends Observable {
 			}
 		}
     	arrayChanged();
+    	System.out.println(toString());
     }
     
-    public void setDelay(Integer delay) {
-		this.delay = delay;
-	}
+    @Override
+    public String toString() {
+    	return "BubbleSort";
+    }
 }
